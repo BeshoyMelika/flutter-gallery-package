@@ -11,7 +11,7 @@ class GalleryPhotoWidget extends StatefulWidget {
   final List<String> imageUrls;
   final String titileGallery;
 
-  const GalleryPhotoWidget({this.imageUrls, this.titileGallery});
+  const GalleryPhotoWidget({@required this.imageUrls, this.titileGallery});
   @override
   _GalleryPhotoWidgetState createState() => _GalleryPhotoWidgetState();
 }
