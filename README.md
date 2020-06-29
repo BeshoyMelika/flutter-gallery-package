@@ -28,7 +28,7 @@ A Flutter plugin that list of images from URLs
 </p>
 
 <p align="center">
-  <img src="./images/example.gif" alt="Gallery Image" />
+  <img src="https://raw.githubusercontent.com/BeshoyMelika/flutter-gallery-package/master/images/example.gif" alt="Gallery Image" />
 </p>
 
 
@@ -82,8 +82,9 @@ Gallery Image is an [emailware](https://en.wiktionary.org/wiki/emailware). Meani
 ## Related
 
 [photo_view](https://pub.dartlang.org/packages/photo_view) - A simple zoomable image/content widget for Flutter.
+[cached_network_image](https://pub.dartlang.org/packages/cached_network_image) - To Load and cache network images..
 
-You can build a gallery picker easily with this package.
+You can build a gallery Images easily with this package.
 
 See the [example](example) for more details.
 
