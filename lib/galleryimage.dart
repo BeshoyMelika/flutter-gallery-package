@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 
 import './gallery_Item_model.dart';
 import './gallery_Item_thumbnail.dart';
-import './gallery_photo_view_wrapper.dart';
-import './ui_util.dart';
+import './gallery_image_view_wrapper.dart';
+import './util.dart';
 
-class GalleryPhotoWidget extends StatefulWidget {
+class GalleryImage extends StatefulWidget {
   final List<String> imageUrls;
   final String titileGallery;
 
-  const GalleryPhotoWidget({@required this.imageUrls, this.titileGallery});
+  const GalleryImage({@required this.imageUrls, this.titileGallery});
   @override
-  _GalleryPhotoWidgetState createState() => _GalleryPhotoWidgetState();
+  _GalleryImageState createState() => _GalleryImageState();
 }
 
-class _GalleryPhotoWidgetState extends State<GalleryPhotoWidget> {
+class _GalleryImageState extends State<GalleryImage> {
   List<GalleryItemModel> galleryItems = <GalleryItemModel>[];
   @override
   void initState() {
@@ -86,7 +86,7 @@ class _GalleryPhotoWidgetState extends State<GalleryPhotoWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => GalleryPhotoViewWrapper(
+        builder: (context) => GalleryImageViewWrapper(
           titileGallery: widget.titileGallery,
           galleryItems: galleryItems,
           backgroundDecoration: const BoxDecoration(

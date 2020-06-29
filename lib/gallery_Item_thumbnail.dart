@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import './gallery_Item_model.dart';
 
-// to show image in Row 
+// to show image in Row
 class GalleryItemThumbnail extends StatelessWidget {
   const GalleryItemThumbnail({Key key, this.galleryItem, this.onTap})
       : super(key: key);
