@@ -9,3 +9,7 @@
 ## [1.0.0] -  1.0.0
 
 * Released preview version for Gallery Image
+
+## [1.0.1] -  1.0.1
+
+* fixed

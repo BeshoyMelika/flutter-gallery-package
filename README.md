@@ -28,7 +28,7 @@ A Flutter plugin that list of images from URLs
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/BeshoyMelika/flutter-gallery-package/master/images/example.gif" alt="Gallery Image" />
+  <img src="https://raw.githubusercontent.com/BeshoyMelika/flutter-gallery-package/master/images/example.gif" alt="Gallery Image" width="300" height="600" />
 </p>
 
 
