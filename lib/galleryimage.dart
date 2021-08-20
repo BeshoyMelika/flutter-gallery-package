@@ -9,9 +9,9 @@ import './util.dart';
 
 class GalleryImage extends StatefulWidget {
   final List<String> imageUrls;
-  final String titileGallery;
+  final String? titleGallery;
 
-  const GalleryImage({@required this.imageUrls, this.titileGallery});
+  const GalleryImage({required this.imageUrls, this.titleGallery});
   @override
   _GalleryImageState createState() => _GalleryImageState();
 }
@@ -87,7 +87,7 @@ class _GalleryImageState extends State<GalleryImage> {
       context,
       MaterialPageRoute(
         builder: (context) => GalleryImageViewWrapper(
-          titileGallery: widget.titileGallery,
+          titleGallery: widget.titleGallery,
           galleryItems: galleryItems,
           backgroundDecoration: const BoxDecoration(
             color: Colors.black,

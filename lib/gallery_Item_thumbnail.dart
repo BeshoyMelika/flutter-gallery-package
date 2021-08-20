@@ -5,12 +5,12 @@ import './gallery_Item_model.dart';
 
 // to show image in Row
 class GalleryItemThumbnail extends StatelessWidget {
-  const GalleryItemThumbnail({Key key, this.galleryItem, this.onTap})
+  const GalleryItemThumbnail({Key? key, required this.galleryItem, this.onTap})
       : super(key: key);
 
   final GalleryItemModel galleryItem;
 
-  final GestureTapCallback onTap;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

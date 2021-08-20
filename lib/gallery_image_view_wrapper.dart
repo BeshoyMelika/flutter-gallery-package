@@ -7,22 +7,22 @@ import './gallery_Item_model.dart';
 
 // to view image in full screen
 class GalleryImageViewWrapper extends StatefulWidget {
-  final LoadingBuilder loadingBuilder;
-  final Decoration backgroundDecoration;
-  final int initialIndex;
+  final LoadingBuilder? loadingBuilder;
+  final BoxDecoration? backgroundDecoration;
+  final int? initialIndex;
   final PageController pageController;
   final List<GalleryItemModel> galleryItems;
   final Axis scrollDirection;
-  final String titileGallery;
+  final String? titleGallery;
 
   GalleryImageViewWrapper({
     this.loadingBuilder,
-    this.titileGallery,
+    this.titleGallery,
     this.backgroundDecoration,
     this.initialIndex,
-    @required this.galleryItems,
+    required this.galleryItems,
     this.scrollDirection = Axis.horizontal,
-  }) : pageController = PageController(initialPage: initialIndex);
+  }) : pageController = PageController(initialPage: initialIndex ?? 0);
 
   @override
   State<StatefulWidget> createState() {
@@ -31,14 +31,13 @@ class GalleryImageViewWrapper extends StatefulWidget {
 }
 
 class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
-  int currentIndex;
   final minScale = PhotoViewComputedScale.contained * 0.8;
   final maxScale = PhotoViewComputedScale.covered * 8;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.titileGallery ?? "Galley"),
+        title: Text(widget.titleGallery ?? "Galley"),
       ),
       body: Container(
         decoration: widget.backgroundDecoration,
