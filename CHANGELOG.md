@@ -1,19 +1,24 @@
-## [0.0.1] - 0.0.1
+## [1.1.0] -  1.1.0
 
-* the first version from my package
+* Support Null Safety
+* Support Web
+* Support MACOS
+* Update Dependencies
+## [1.0.2] -  1.0.2
 
-## [0.0.2] -  0.0.2
+* fixed
+## [1.0.1] -  1.0.1
 
-* update example and class
+* fixed
 
 ## [1.0.0] -  1.0.0
 
 * Released preview version for Gallery Image
 
-## [1.0.1] -  1.0.1
+## [0.0.2] -  0.0.2
 
-* fixed
+* update example and class
 
-## [1.0.2] -  1.0.2
+## [0.0.1] - 0.0.1
 
-* fixed
+* the first version from my package
