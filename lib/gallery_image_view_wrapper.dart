@@ -37,7 +37,7 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.titleGallery ?? "Galley"),
+        title: Text(widget.titleGallery ?? "Gallery"),
       ),
       body: Container(
         decoration: widget.backgroundDecoration,
