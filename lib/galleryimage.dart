@@ -10,9 +10,15 @@ import './util.dart';
 class GalleryImage extends StatefulWidget {
   final List<String> imageUrls;
   final String? titleGallery;
+  final int numOfShowImages;
 
-  const GalleryImage({Key? key, required this.imageUrls, this.titleGallery})
-      : super(key: key);
+  const GalleryImage(
+      {Key? key,
+      required this.imageUrls,
+      this.titleGallery,
+      this.numOfShowImages = 3})
+      : assert(numOfShowImages <= imageUrls.length),
+        super(key: key);
   @override
   State<GalleryImage> createState() => _GalleryImageState();
 }
@@ -33,7 +39,9 @@ class _GalleryImageState extends State<GalleryImage> {
             ? getEmptyWidget()
             : GridView.builder(
                 primary: false,
-                itemCount: galleryItems.length > 3 ? 3 : galleryItems.length,
+                itemCount: galleryItems.length > 3
+                    ? widget.numOfShowImages
+                    : galleryItems.length,
                 padding: const EdgeInsets.all(0),
                 semanticChildCount: 1,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -44,7 +52,8 @@ class _GalleryImageState extends State<GalleryImage> {
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       // if have less than 4 image w build GalleryItemThumbnail
                       // if have mor than 4 build image number 3 with number for other images
-                      child: galleryItems.length > 3 && index == 2
+                      child: index < galleryItems.length - 1 &&
+                              index == widget.numOfShowImages - 1
                           ? buildImageNumbers(index)
                           : GalleryItemThumbnail(
                               galleryItem: galleryItems[index],
