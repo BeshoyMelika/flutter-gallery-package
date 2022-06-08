@@ -9,7 +9,7 @@ A Flutter plugin that list of images from URLs
 </h1>
 
 <h4 align="center">
-  <a href="https://flutter.dev" target="_blank">Flutter</a> plugin that allows you to display multi image on iOS and Android.
+  <a href="https://flutter.dev" target="_blank">Flutter</a> plugin that allows you to display multi image on iOS, Android, MacOs,Web.
 </h4>
 
 <p align="center">
@@ -17,7 +17,7 @@ A Flutter plugin that list of images from URLs
     <img src="https://img.shields.io/badge/build-passing-green"
          alt="Build">
   </a>
-  <a href="https://pub.dartlang.org/packages/galleryimage"><img src="https://img.shields.io/badge/pub-v1.0.0-blue"></a>
+  <a href="https://pub.dartlang.org/packages/galleryimage"><img src="https://img.shields.io/badge/pub-v1.2.0-blue"></a>
   
 </p>
 
@@ -68,7 +68,10 @@ List<String> listOfUrls= [
 Widget build(BuildContext context) {
   return Container(
     child: GalleryImage(
-     imageUrls: listOfUrls,,
+      key: _key,
+      imageUrls: listOfUrls,
+      numOfShowImages: 4,
+      titleGallery: _title,          
     )
   );
 }

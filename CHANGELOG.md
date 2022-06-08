@@ -1,3 +1,9 @@
+## [1.2.0] -  1.2.0
+
+* Update Flutter 3
+* can change number of image view
+* update readme.md
+
 ## [1.1.0] -  1.1.0
 
 * Support Null Safety
