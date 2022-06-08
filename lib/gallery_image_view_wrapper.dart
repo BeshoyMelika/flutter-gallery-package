@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import 'gallery_item_model.dart';
+import 'gallery_item_mode.dart';
 
 // to view image in full screen
 class GalleryImageViewWrapper extends StatefulWidget {

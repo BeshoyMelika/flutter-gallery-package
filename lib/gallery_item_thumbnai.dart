@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'gallery_item_model.dart';
+import 'gallery_item_mode.dart';
 
 // to show image in Row
 class GalleryItemThumbnail extends StatelessWidget {

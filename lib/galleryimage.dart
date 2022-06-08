@@ -2,8 +2,8 @@ library galleryimage;
 
 import 'package:flutter/material.dart';
 
-import 'gallery_item_model.dart';
-import 'gallery_item_thumbnail.dart';
+import 'gallery_item_mode.dart';
+import 'gallery_item_thumbnai.dart';
 import './gallery_image_view_wrapper.dart';
 import './util.dart';
 
