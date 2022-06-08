@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import './gallery_Item_model.dart';
+import 'gallery_item_model.dart';
 
 // to view image in full screen
 class GalleryImageViewWrapper extends StatefulWidget {
@@ -16,13 +16,15 @@ class GalleryImageViewWrapper extends StatefulWidget {
   final String? titleGallery;
 
   GalleryImageViewWrapper({
+    Key? key,
     this.loadingBuilder,
     this.titleGallery,
     this.backgroundDecoration,
     this.initialIndex,
     required this.galleryItems,
     this.scrollDirection = Axis.horizontal,
-  }) : pageController = PageController(initialPage: initialIndex ?? 0);
+  })  : pageController = PageController(initialPage: initialIndex ?? 0),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -61,13 +63,11 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
   PhotoViewGalleryPageOptions _buildImage(BuildContext context, int index) {
     final GalleryItemModel item = widget.galleryItems[index];
     return PhotoViewGalleryPageOptions.customChild(
-      child: Container(
-        child: CachedNetworkImage(
-          imageUrl: item.imageUrl,
-          placeholder: (context, url) =>
-              Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        ),
+      child: CachedNetworkImage(
+        imageUrl: item.imageUrl,
+        placeholder: (context, url) =>
+            const Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
       initialScale: PhotoViewComputedScale.contained,
       minScale: minScale,

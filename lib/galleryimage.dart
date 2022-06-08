@@ -2,8 +2,8 @@ library galleryimage;
 
 import 'package:flutter/material.dart';
 
-import './gallery_Item_model.dart';
-import './gallery_Item_thumbnail.dart';
+import 'gallery_item_model.dart';
+import 'gallery_item_thumbnail.dart';
 import './gallery_image_view_wrapper.dart';
 import './util.dart';
 
@@ -11,9 +11,10 @@ class GalleryImage extends StatefulWidget {
   final List<String> imageUrls;
   final String? titleGallery;
 
-  const GalleryImage({required this.imageUrls, this.titleGallery});
+  const GalleryImage({Key? key, required this.imageUrls, this.titleGallery})
+      : super(key: key);
   @override
-  _GalleryImageState createState() => _GalleryImageState();
+  State<GalleryImage> createState() => _GalleryImageState();
 }
 
 class _GalleryImageState extends State<GalleryImage> {
@@ -27,20 +28,20 @@ class _GalleryImageState extends State<GalleryImage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: galleryItems.isEmpty
             ? getEmptyWidget()
             : GridView.builder(
                 primary: false,
                 itemCount: galleryItems.length > 3 ? 3 : galleryItems.length,
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 semanticChildCount: 1,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, mainAxisSpacing: 0, crossAxisSpacing: 5),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
                       // if have less than 4 image w build GalleryItemThumbnail
                       // if have mor than 4 build image number 3 with number for other images
                       child: galleryItems.length > 3 && index == 2
@@ -72,7 +73,7 @@ class _GalleryImageState extends State<GalleryImage> {
             child: Center(
               child: Text(
                 "+${galleryItems.length - index}",
-                style: TextStyle(color: Colors.white, fontSize: 40),
+                style: const TextStyle(color: Colors.white, fontSize: 40),
               ),
             ),
           ),
@@ -102,10 +103,10 @@ class _GalleryImageState extends State<GalleryImage> {
 // clear and build list
   buildItemsList(List<String> items) {
     galleryItems.clear();
-    items.forEach((item) {
+    for (var item in items) {
       galleryItems.add(
         GalleryItemModel(id: item, imageUrl: item),
       );
-    });
+    }
   }
 }
