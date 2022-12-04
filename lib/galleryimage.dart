@@ -1,5 +1,7 @@
 library galleryimage;
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'gallery_item_model.dart';
@@ -11,20 +13,35 @@ class GalleryImage extends StatefulWidget {
   final List<String> imageUrls;
   final String? titleGallery;
   final int numOfShowImages;
+  final bool showTitleImage;
+  final double? titleImageWidth;
+  final double? titleImageHeight;
+
+  final double gridHorizontalSpacing;
+  final double gridVerticalSpacing;
+  final int gridColumns;
+  final BorderRadius thumbnailBorderRadius;
 
   const GalleryImage(
       {Key? key,
       required this.imageUrls,
       this.titleGallery,
-      this.numOfShowImages = 3})
-      : assert(numOfShowImages <= imageUrls.length),
-        super(key: key);
+      this.numOfShowImages = 3,
+      this.showTitleImage = false,
+      this.titleImageWidth,
+      this.titleImageHeight,
+      this.gridHorizontalSpacing = 5,
+      this.gridVerticalSpacing = 5,
+      this.gridColumns = 3,
+      this.thumbnailBorderRadius = const BorderRadius.all(Radius.circular(8))})
+      : super(key: key);
   @override
   State<GalleryImage> createState() => _GalleryImageState();
 }
 
 class _GalleryImageState extends State<GalleryImage> {
   List<GalleryItemModel> galleryItems = <GalleryItemModel>[];
+
   @override
   void initState() {
     buildItemsList(widget.imageUrls);
@@ -32,36 +49,72 @@ class _GalleryImageState extends State<GalleryImage> {
   }
 
   @override
+  void didUpdateWidget(GalleryImage oldWidget) {
+    // Makes the widget update properly if imageUrls get changed
+    if (oldWidget.imageUrls != widget.imageUrls) {
+      buildItemsList(widget.imageUrls);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    int galleryItemsWithoutTitleImage = widget.showTitleImage
+      ? galleryItems.length - 1
+      : galleryItems.length;
+    int galleryIndexOffset = widget.showTitleImage ? 1 : 0;
+
     return Padding(
         padding: const EdgeInsets.all(10),
         child: galleryItems.isEmpty
             ? getEmptyWidget()
-            : GridView.builder(
+            : Column(
+          children: [
+            if (widget.showTitleImage) Container(
+              //width: widget.titleImageWidth,
+              height: widget.titleImageHeight,
+              padding: EdgeInsets.only(bottom: widget.gridVerticalSpacing),
+              child: ClipRRect(
+                borderRadius: widget.thumbnailBorderRadius,
+                child: GalleryItemThumbnail(
+                  galleryItem: galleryItems[0],
+                  onTap: () {
+                    openImageFullScreen(0);
+                  },
+                ),
+              ),
+            ),
+            if (galleryItemsWithoutTitleImage > 0) GridView.builder(
                 primary: false,
-                itemCount: galleryItems.length > 3
-                    ? widget.numOfShowImages
-                    : galleryItems.length,
+                itemCount: min(
+                  galleryItemsWithoutTitleImage,
+                  widget.numOfShowImages
+                ),
                 padding: const EdgeInsets.all(0),
                 semanticChildCount: 1,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, mainAxisSpacing: 0, crossAxisSpacing: 5),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: widget.gridColumns,
+                  mainAxisSpacing: widget.gridVerticalSpacing,
+                  crossAxisSpacing: widget.gridHorizontalSpacing,
+                ),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
+                  int finalIndex = index + galleryIndexOffset;
                   return ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      borderRadius: widget.thumbnailBorderRadius,
                       // if have less than 4 image w build GalleryItemThumbnail
                       // if have mor than 4 build image number 3 with number for other images
-                      child: index < galleryItems.length - 1 &&
-                              index == widget.numOfShowImages - 1
-                          ? buildImageNumbers(index)
+                      child: finalIndex < galleryItems.length - 1 &&
+                          index == widget.numOfShowImages - 1
+                          ? buildImageNumbers(finalIndex)
                           : GalleryItemThumbnail(
-                              galleryItem: galleryItems[index],
-                              onTap: () {
-                                openImageFullScreen(index);
-                              },
-                            ));
-                }));
+                        galleryItem: galleryItems[finalIndex],
+                        onTap: () {
+                          openImageFullScreen(finalIndex);
+                        },
+                      ));
+                })
+          ],
+        ));
   }
 
 // build image with number for other images
