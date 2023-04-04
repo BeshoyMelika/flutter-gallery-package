@@ -48,7 +48,10 @@ class _GalleryImageState extends State<GalleryImage> {
                     crossAxisCount: 3, mainAxisSpacing: 0, crossAxisSpacing: 5),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
-                  return ClipRRect(
+                  return Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                  child:
+                  ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       // if have less than 4 image w build GalleryItemThumbnail
                       // if have mor than 4 build image number 3 with number for other images
@@ -60,7 +63,7 @@ class _GalleryImageState extends State<GalleryImage> {
                               onTap: () {
                                 openImageFullScreen(index);
                               },
-                            ));
+                            )));
                 }));
   }
 
