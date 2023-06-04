@@ -1,3 +1,16 @@
+## [2.0.0] -  2.0.0
+
+* Update Flutter 3.10
+* Add Option to close the gallery when Swipe Up or Down 
+* Can Change Loading Widget
+* Can Change Error Widget
+* Can Change gallery bg color
+* Can Change text theme
+* Change padding to list
+* Add List of image in Gallery Screen
+* Control to Show AppBar in Gallery Screen
+* Encasement
+
 ## [1.2.0] -  1.2.0
 
 * Update Flutter 3
