@@ -1,0 +1,15 @@
+After you finished your edits
+
+# Step 0
+    --> update lib version in pubspec.yaml
+    --> update lib version in CHANGELOG.md
+
+# Step 1
+    --> push all changes to github
+
+# Step 2 to push your package in pub.dev
+    --> check all is well
+    flutter pub publish --dry-run
+
+# Step 3 upload to pub.dev
+    --> run flutter pub publish

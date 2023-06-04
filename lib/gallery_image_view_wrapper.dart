@@ -1,30 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
+import 'package:galleryimage/app_cached_network_image.dart';
 
 import 'gallery_item_model.dart';
 
 // to view image in full screen
 class GalleryImageViewWrapper extends StatefulWidget {
-  final LoadingBuilder? loadingBuilder;
-  final BoxDecoration? backgroundDecoration;
+  final Color? backgroundColor;
   final int? initialIndex;
-  final PageController pageController;
   final List<GalleryItemModel> galleryItems;
-  final Axis scrollDirection;
   final String? titleGallery;
+  final Widget? loadingWidget;
+  final Widget? errorWidget;
+  final double minScale;
+  final double maxScale;
+  final double radius;
+  final bool reverse;
+  final bool showListInGalley;
+  final bool showAppBar;
+  final bool closeWhenSwipeUp;
+  final bool closeWhenSwipeDown;
 
-  GalleryImageViewWrapper({
+  const GalleryImageViewWrapper({
     Key? key,
-    this.loadingBuilder,
-    this.titleGallery,
-    this.backgroundDecoration,
-    this.initialIndex,
+    required this.titleGallery,
+    required this.backgroundColor,
+    required this.initialIndex,
     required this.galleryItems,
-    this.scrollDirection = Axis.horizontal,
-  })  : pageController = PageController(initialPage: initialIndex ?? 0),
-        super(key: key);
+    required this.loadingWidget,
+    required this.errorWidget,
+    required this.minScale,
+    required this.maxScale,
+    required this.radius,
+    required this.reverse,
+    required this.showListInGalley,
+    required this.showAppBar,
+    required this.closeWhenSwipeUp,
+    required this.closeWhenSwipeDown,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -33,46 +45,123 @@ class GalleryImageViewWrapper extends StatefulWidget {
 }
 
 class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
-  final minScale = PhotoViewComputedScale.contained * 0.8;
-  final maxScale = PhotoViewComputedScale.covered * 8;
+  late final PageController _controller =
+      PageController(initialPage: widget.initialIndex ?? 0);
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    _currentPage = 0;
+    _controller.addListener(() {
+      setState(() {
+        _currentPage = _controller.page?.toInt() ?? 0;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.titleGallery ?? "Gallery"),
-      ),
-      body: Container(
-        decoration: widget.backgroundDecoration,
-        constraints: BoxConstraints.expand(
-          height: MediaQuery.of(context).size.height,
-        ),
-        child: PhotoViewGallery.builder(
-          scrollPhysics: const BouncingScrollPhysics(),
-          builder: _buildImage,
-          itemCount: widget.galleryItems.length,
-          loadingBuilder: widget.loadingBuilder,
-          backgroundDecoration: widget.backgroundDecoration,
-          pageController: widget.pageController,
-          scrollDirection: widget.scrollDirection,
+      appBar: widget.showAppBar
+          ? AppBar(
+              title: Text(widget.titleGallery ?? "Gallery"),
+            )
+          : null,
+      backgroundColor: widget.backgroundColor,
+      body: SafeArea(
+        child: Container(
+          constraints:
+              BoxConstraints.expand(height: MediaQuery.of(context).size.height),
+          child: Column(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onVerticalDragEnd: (details) {
+                    if (widget.closeWhenSwipeUp &&
+                        details.primaryVelocity! < 0) {
+                      //'up'
+                      Navigator.of(context).pop();
+                    }
+                    if (widget.closeWhenSwipeDown &&
+                        details.primaryVelocity! > 0) {
+                      // 'down'
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: PageView.builder(
+                    reverse: widget.reverse,
+                    controller: _controller,
+                    itemCount: widget.galleryItems.length,
+                    itemBuilder: (context, index) =>
+                        _buildImage(widget.galleryItems[index]),
+                  ),
+                ),
+              ),
+              if (widget.showListInGalley)
+                SizedBox(
+                  height: 80,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: widget.galleryItems
+                          .map((e) => _buildLitImage(e))
+                          .toList(),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
 
 // build image with zooming
-  PhotoViewGalleryPageOptions _buildImage(BuildContext context, int index) {
-    final GalleryItemModel item = widget.galleryItems[index];
-    return PhotoViewGalleryPageOptions.customChild(
-      child: CachedNetworkImage(
-        imageUrl: item.imageUrl,
-        placeholder: (context, url) =>
-            const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
+  Widget _buildImage(GalleryItemModel item) {
+    return Hero(
+      tag: item.id,
+      child: InteractiveViewer(
+        minScale: widget.minScale,
+        maxScale: widget.maxScale,
+        child: Center(
+          child: AppCachedNetworkImage(
+            imageUrl: item.imageUrl,
+            loadingWidget: widget.loadingWidget,
+            errorWidget: widget.errorWidget,
+            radius: widget.radius,
+          ),
+        ),
       ),
-      initialScale: PhotoViewComputedScale.contained,
-      minScale: minScale,
-      maxScale: maxScale,
-      heroAttributes: PhotoViewHeroAttributes(tag: item.id),
+    );
+  }
+
+// build image with zooming
+  Widget _buildLitImage(GalleryItemModel item) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _controller.jumpToPage(item.index);
+          });
+        },
+        child: AppCachedNetworkImage(
+          height: _currentPage == item.index ? 70 : 60,
+          width: _currentPage == item.index ? 70 : 60,
+          fit: BoxFit.cover,
+          imageUrl: item.imageUrl,
+          errorWidget: widget.errorWidget,
+          radius: widget.radius,
+          loadingWidget: widget.loadingWidget,
+        ),
+      ),
     );
   }
 }
