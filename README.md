@@ -17,7 +17,7 @@ A Flutter plugin that list of images from URLs
     <img src="https://img.shields.io/badge/build-passing-green"
          alt="Build">
   </a>
-  <a href="https://pub.dartlang.org/packages/galleryimage"><img src="https://img.shields.io/badge/pub-v1.2.0-blue"></a>
+  <a href="https://pub.dartlang.org/packages/galleryimage"><img src="https://img.shields.io/badge/pub-v2.0.1-blue"></a>
   
 </p>
 
@@ -35,6 +35,9 @@ A Flutter plugin that list of images from URLs
 ## Key Features
 * Pick images from Url
 * Photos sorted 
+* close the gallery when Swipe Up or Down
+* Add List of image in Gallery Screen 
+* Change Loading Widget
 * zoomable image
 
 ## Installation
@@ -84,7 +87,6 @@ Gallery Image is an [emailware](https://en.wiktionary.org/wiki/emailware). Meani
 
 ## Related
 
-[photo_view](https://pub.dartlang.org/packages/photo_view) - A simple zoomable image/content widget for Flutter.
 [cached_network_image](https://pub.dartlang.org/packages/cached_network_image) - To Load and cache network images..
 
 You can build a gallery Images easily with this package.
