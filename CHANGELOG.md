@@ -1,6 +1,13 @@
+## [2.0.1] -  2.0.1
+
+* Update readme.md file
+* Update screenshot files
+* Update example
+
 ## [2.0.0] -  2.0.0
 
 * Update Flutter 3.10
+* Support Dart 3
 * Add Option to close the gallery when Swipe Up or Down 
 * Can Change Loading Widget
 * Can Change Error Widget
@@ -10,6 +17,8 @@
 * Add List of image in Gallery Screen
 * Control to Show AppBar in Gallery Screen
 * Encasement
+* Update Dependencies
+
 
 ## [1.2.0] -  1.2.0
 
