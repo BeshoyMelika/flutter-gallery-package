@@ -61,10 +61,17 @@ class GalleryImage extends StatefulWidget {
 
 class _GalleryImageState extends State<GalleryImage> {
   List<GalleryItemModel> galleryItems = <GalleryItemModel>[];
+
   @override
   void initState() {
     _buildItemsList(widget.imageUrls);
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant GalleryImage oldWidget) {
+    _buildItemsList(widget.imageUrls);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
