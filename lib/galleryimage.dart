@@ -29,7 +29,7 @@ class GalleryImage extends StatefulWidget {
   final bool showAppBar;
   final bool closeWhenSwipeUp;
   final bool closeWhenSwipeDown;
-  final void Function(String)? onImagePress;
+  final void Function(int)? onImagePress;
   
   const GalleryImage({
     Key? key,
@@ -91,6 +91,9 @@ class _GalleryImageState extends State<GalleryImage> {
                   ? _buildImageNumbers(index)
                   : GalleryItemThumbnail(
                       galleryItem: galleryItems[index],
+                      onLongPress: () {
+                        widget.onImagePress?.call(index);
+                      },
                       onTap: () {
                         _openImageFullScreen(index);
                       },
@@ -119,6 +122,7 @@ class _GalleryImageState extends State<GalleryImage> {
             loadingWidget: widget.loadingWidget,
             errorWidget: widget.errorWidget,
             onTap: null,
+            onLongPress: null,
             radius: widget.imageRadius,
           ),
           ClipRRect(
