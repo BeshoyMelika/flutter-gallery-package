@@ -29,7 +29,8 @@ class GalleryImage extends StatefulWidget {
   final bool showAppBar;
   final bool closeWhenSwipeUp;
   final bool closeWhenSwipeDown;
-
+  final void Function(int)? onImagePress;
+  
   const GalleryImage({
     Key? key,
     required this.imageUrls,
@@ -53,6 +54,7 @@ class GalleryImage extends StatefulWidget {
     this.showAppBar = true,
     this.closeWhenSwipeUp = false,
     this.closeWhenSwipeDown = false,
+    this.onImagePress,
   })  : assert(numOfShowImages <= imageUrls.length),
         super(key: key);
   @override
@@ -89,6 +91,9 @@ class _GalleryImageState extends State<GalleryImage> {
                   ? _buildImageNumbers(index)
                   : GalleryItemThumbnail(
                       galleryItem: galleryItems[index],
+                      onLongPress: () {
+                        widget.onImagePress?.call(index);
+                      },
                       onTap: () {
                         _openImageFullScreen(index);
                       },
@@ -102,6 +107,9 @@ class _GalleryImageState extends State<GalleryImage> {
 // build image with number for other images
   Widget _buildImageNumbers(int index) {
     return GestureDetector(
+      onLongPress: () {
+        widget.onImagePress?.call(index);
+      },
       onTap: () {
         _openImageFullScreen(index);
       },
@@ -114,6 +122,7 @@ class _GalleryImageState extends State<GalleryImage> {
             loadingWidget: widget.loadingWidget,
             errorWidget: widget.errorWidget,
             onTap: null,
+            onLongPress: null,
             radius: widget.imageRadius,
           ),
           ClipRRect(
