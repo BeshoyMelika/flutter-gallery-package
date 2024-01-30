@@ -34,7 +34,9 @@ class AppCachedNetworkImage extends StatelessWidget {
     final uri = Uri.parse(imageUrl);
     final isFileUri = (uri.scheme == "file");
     if (isFileUri) {
-      return Image.file(File(uri.path), width: width, height: height);
+      // uri.path contains encoded url chars (if space is %20)
+      final pathDecoded = Uri.decodeFull(uri.path);
+      return Image.file(File(pathDecoded), width: width, height: height);
     } else {
       return CachedNetworkImage(
         height: height,
