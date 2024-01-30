@@ -26,20 +26,11 @@ class AppCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(radius)),
-      child: CachedNetworkImage(
-        height: height,
-        width: width,
-        fit: fit,
-        imageUrl: imageUrl,
-        placeholder: (context, url) =>
-            loadingWidget ?? const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) =>
-            errorWidget ?? const Icon(Icons.error),
-      ),
+      child: _createImageWidget(context: context),
     );
   }
 
-  Widget _createImageWidget(BuildContext context) {
+  Widget _createImageWidget({required BuildContext context}) {
     final uri = Uri.parse(imageUrl);
     final isFileUri = (uri.scheme == "file");
     if (isFileUri) {
