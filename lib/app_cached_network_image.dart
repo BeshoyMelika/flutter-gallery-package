@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,19 @@ class AppCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(radius)),
-      child: CachedNetworkImage(
+      child: _createImageWidget(context: context),
+    );
+  }
+
+  Widget _createImageWidget({required BuildContext context}) {
+    final uri = Uri.parse(imageUrl);
+    final isFileUri = (uri.scheme == "file");
+    if (isFileUri) {
+      // uri.path contains encoded url chars (if space is %20)
+      final pathDecoded = Uri.decodeFull(uri.path);
+      return Image.file(File(pathDecoded), width: width, height: height);
+    } else {
+      return CachedNetworkImage(
         height: height,
         width: width,
         fit: fit,
@@ -34,7 +47,7 @@ class AppCachedNetworkImage extends StatelessWidget {
             loadingWidget ?? const Center(child: CircularProgressIndicator()),
         errorWidget: (context, url, error) =>
             errorWidget ?? const Icon(Icons.error),
-      ),
-    );
+      );
+    }
   }
 }
